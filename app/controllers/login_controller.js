@@ -4,21 +4,23 @@ const SignUpUser = require('../models/signup-user.js');
 
 
 // Retrieve and return all users from the database.
-exports.findOne = (req, res).then(signupuser => {
-        if(!signupuser) {
+exports.findOne = (req, res) => {
+    SignUpUser.findById(req.params.noteId)
+    .then(note => {
+        if(!note) {
             return res.status(404).send({
-                message: "signupuser not found with id " + req.params.signupuserId
-            });
+                message: "Note not found with id " + req.params.noteId
+            });            
         }
-        res.send({message: "successfully! login", code: "success"});
+        res.send(note);
     }).catch(err => {
-        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+        if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "signupuser not found with id " + req.params.signupuserId
+                message: "Note not found with id " + req.params.noteId
             });                
         }
         return res.status(500).send({
-            message: "Could not delete signupuser with id " + req.params.signupuserId
+            message: "Error retrieving note with id " + req.params.noteId
         });
-});
-
+    });
+};
