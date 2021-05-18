@@ -41,6 +41,8 @@ mongoose.connect(dbConfig.url, {
 // Require Notes routes
 require('./app/routes/note.routes.js')(app);
 require('./app/routes/signup.routes.js')(app);
+require('./app/routes/login.routes.js')(app);
+require('./app/routes/addprofile.routes.js')(app);
 
 // define a simple route
 app.get('/', (req, res) => {
